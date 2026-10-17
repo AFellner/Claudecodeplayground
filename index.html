@@ -1,10 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Hello World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zauberwürfel-Löser</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Hello, World!</h1>
+  <header>
+    <h1>Zauberwürfel-Löser</h1>
+    <p class="sub">Farben eingeben, prüfen lassen und Schritt für Schritt lösen.</p>
+  </header>
+
+  <main>
+    <section class="stage">
+      <div id="cube" class="cube-canvas" aria-label="3D-Würfel"></div>
+      <div class="view-controls" aria-label="Ansicht drehen">
+        <button data-view="left" title="Ansicht nach links drehen">◀</button>
+        <button data-view="up" title="Ansicht nach oben kippen">▲</button>
+        <button data-view="reset" title="Ansicht zurücksetzen">⟲</button>
+        <button data-view="down" title="Ansicht nach unten kippen">▼</button>
+        <button data-view="right" title="Ansicht nach rechts drehen">▶</button>
+      </div>
+      <p class="hint">Ziehen dreht die Ansicht.</p>
+    </section>
+
+    <section class="panel" id="input-panel">
+      <h2>1. Farben eingeben</h2>
+      <p class="info">
+        Halte deinen Würfel mit <strong>Weiß oben</strong> und <strong>Grün vorne</strong>
+        (die Mittelsteine sind fest). Wähle eine Farbe und klicke auf die Felder.
+      </p>
+      <div class="palette" id="palette"></div>
+      <div class="row">
+        <button id="btn-solved" class="secondary">Gelöst setzen</button>
+        <button id="btn-clear" class="secondary">Leeren</button>
+      </div>
+
+      <h2>2. Methode wählen</h2>
+      <div class="methods">
+        <label><input type="radio" name="method" value="beginner" checked>
+          <span><strong>Anfängermethode</strong><br><small>Schicht für Schicht, gut nachvollziehbar (ca. 100–200 Züge)</small></span></label>
+        <label><input type="radio" name="method" value="short">
+          <span><strong>Kürzeste Lösung</strong><br><small>Kociemba-Algorithmus, ca. 20 Züge</small></span></label>
+      </div>
+
+      <button id="btn-solve" class="primary">Prüfen &amp; lösen</button>
+      <div id="messages" class="messages" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="panel hidden" id="solution-panel">
+      <h2>Lösung</h2>
+      <p class="progress" id="progress"></p>
+      <div class="phase">
+        <h3 id="phase-name"></h3>
+        <p id="phase-desc"></p>
+      </div>
+      <div class="current">
+        <span class="move" id="current-move">–</span>
+        <span class="move-desc" id="current-move-desc"></span>
+      </div>
+      <div class="moves" id="phase-moves"></div>
+
+      <div class="player">
+        <button id="btn-first" title="Zum Anfang">⏮</button>
+        <button id="btn-prev" title="Ein Zug zurück">◀</button>
+        <button id="btn-play" class="primary" title="Abspielen / Pause">▶</button>
+        <button id="btn-next" title="Ein Zug vor">▶|</button>
+        <button id="btn-last" title="Zum Ende">⏭</button>
+      </div>
+      <label class="speed">Geschwindigkeit
+        <input type="range" id="speed" min="1" max="5" value="3">
+      </label>
+
+      <ol class="phase-list" id="phase-list"></ol>
+      <button id="btn-back" class="secondary">Zurück zur Eingabe</button>
+    </section>
+  </main>
+
+  <script src="vendor/three.min.js"></script>
+  <script src="vendor/cubejs/cube.js"></script>
+  <script src="vendor/cubejs/solve.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/beginner.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
